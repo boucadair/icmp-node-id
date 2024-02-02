@@ -4,8 +4,8 @@
 
 intarea                                                        B. Fenner
 Internet-Draft                                           Arista Networks
-Intended status: Standards Track                         1 February 2024
-Expires: 4 August 2024
+Intended status: Standards Track                         2 February 2024
+Expires: 5 August 2024
 
 
                Extending ICMP for System Indentification
@@ -13,18 +13,17 @@ Expires: 4 August 2024
 
 Abstract
 
-   [RFC5837] describes ... [I-D.chroboczek-int-v4-via-v6] talks about
-   ...
+   RFC5837 describes ... I-D.chroboczek-int-v4-via-v6 talks about ...
 
 About This Document
 
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://fenner.github.io/icmp-node-id/draft-fenner-int-extended-icmp-
-   hostid.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-fenner-intarea-extended-icmp-
-   hostid/.
+   https://fenner.github.io/icmp-node-id/draft-fenner-intarea-extended-
+   icmp-hostid.html.  Status information for this document may be found
+   at https://datatracker.ietf.org/doc/draft-fenner-intarea-extended-
+   icmp-hostid/.
 
    Discussion of this document takes place on the Internet Area Area
    mailing list (mailto:int-area@ietf.org), which is archived at .
@@ -48,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 August 2024.
+   This Internet-Draft will expire on 5 August 2024.
 
 Copyright Notice
 
@@ -81,7 +80,7 @@ Table of Contents
    In addition to adding incoming interface information to a traceroute
    using the mechanisms described in [RFC5837], a network operator may
    be interested in adding information to identify nodes themselves.
-   [I-D.chroboczek-int-v4-via-v6] describes a scenario in which
+   [I-D.chroboczek-intarea-v4-via-v6] describes a scenario in which
    individual nodes do not have unique IPv4 addresses to use to reply to
    an IPv4 traceroute, so additional information is needed.
 
@@ -190,12 +189,12 @@ Table of Contents
 
 6.  Normative References
 
-   [I-D.chroboczek-int-v4-via-v6]
+   [I-D.chroboczek-intarea-v4-via-v6]
               Chroboczek, J., Kumari, W. A., and T. Høiland-Jørgensen,
               "IPv4 routes with an IPv6 next hop", Work in Progress,
-              Internet-Draft, draft-chroboczek-int-v4-via-v6-03, 22
+              Internet-Draft, draft-chroboczek-intarea-v4-via-v6-00, 21
               January 2024, <https://datatracker.ietf.org/doc/html/
-              draft-chroboczek-int-v4-via-v6-03>.
+              draft-chroboczek-intarea-v4-via-v6-00>.
 
    [IANA.address-family-numbers]
               IANA, "Address Family Numbers",
