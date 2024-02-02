@@ -4,11 +4,17 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Extending ICMP for System Indentification</title>
+<title>Extending ICMP for System Identification</title>
 <meta content="Bill Fenner" name="author">
 <meta content="
-       RFC5837 describes ...
-I-D.chroboczek-int-v4-via-v6 talks about ... 
+       RFC5837 describes a mechanism for Extending ICMP for Interface and Next-Hop Identification,
+which allows providing additional information in an ICMP error that helps identify
+interfaces participating in the path.  This is especially useful in environments
+where each interface may not have a unique IP address to respond to, e.g., a traceroute. 
+       This document introduces a similar ICMP extension for Node identification.
+It allows providing a unique IP address or a textual name for the node, in
+the case where each node may not have a unique IP address (e.g., the
+IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6). 
     " name="description">
 <meta content="xml2rfc 3.19.1" name="generator">
 <meta content="ICMP" name="keyword">
@@ -1040,7 +1046,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">intarea</dd>
+<dd class="workgroup">Internet Area Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-fenner-intarea-extended-icmp-hostid-latest</dd>
 <dt class="label-published">Published:</dt>
@@ -1060,11 +1066,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">Extending ICMP for System Indentification</h1>
+<h1 id="title">Extending ICMP for System Identification</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">RFC5837 describes ...
-I-D.chroboczek-int-v4-via-v6 talks about ...<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">RFC5837 describes a mechanism for Extending ICMP for Interface and Next-Hop Identification,
+which allows providing additional information in an ICMP error that helps identify
+interfaces participating in the path.  This is especially useful in environments
+where each interface may not have a unique IP address to respond to, e.g., a traceroute.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This document introduces a similar ICMP extension for Node identification.
+It allows providing a unique IP address or a textual name for the node, in
+the case where each node may not have a unique IP address (e.g., the
+IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1076,8 +1088,8 @@ I-D.chroboczek-int-v4-via-v6 talks about ...<a href="#section-abstract-1" class=
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-fenner-intarea-extended-icmp-hostid/">https://datatracker.ietf.org/doc/draft-fenner-intarea-extended-icmp-hostid/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        Internet Area Area mailing list (<span><a href="mailto:int-area@ietf.org">mailto:int-area@ietf.org</a></span>),
-        which is archived at <span><a href=""></a></span>.
+        Internet Area Working Group Working Group mailing list (<span><a href="mailto:int-area@ietf.org">mailto:int-area@ietf.org</a></span>),
+        which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/int-area/">https://mailarchive.ietf.org/arch/browse/int-area/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/int-area/">https://www.ietf.org/mailman/listinfo/int-area/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
         <span><a href="https://github.com/fenner/icmp-node-id">https://github.com/fenner/icmp-node-id</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
@@ -1217,7 +1229,7 @@ to any of the currently defined ICMPv4 or ICMPv6 messages other than
 those listed above.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The extension defined herein <span class="bcp14">MAY</span> be appended to any of the above
 listed messages and <span class="bcp14">SHOULD</span> be appended whenever required to identify
-an unnumbered interface and when local policy or security
+the node and when local policy or security
 considerations do not supersede this requirement.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <div id="c-type-meaning-in-a-node-identification-object">
 <section id="section-3.1">
@@ -1242,7 +1254,7 @@ characters.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
             <p id="section-3.1-4.1.1">2: Identifies Node by Address<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.1-5">If the Node Identificaton Object identifies the node by
+<p id="section-3.1-5">If the Node Identification Object identifies the node by
 address, the Object Payload contains an address sufficient
 to identify the node within the appropriate scope - global
 or as otherwise configured - as depicted in <a href="#addrFig" class="auto internal xref">Figure 1</a>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
@@ -1356,7 +1368,7 @@ document is just for discussion.<a href="#section-5-1" class="pilcrow">¶</a></p
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="appendix-A-1">This document derives text heavily from <span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span>, since the
-underlyning mechanism is the same, and only the content of the
+underlying mechanism is identical, and only the content of the
 messages differ.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
