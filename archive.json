@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-19T00:44:56.834513+00:00",
+  "timestamp": "2024-03-21T00:47:23.948965+00:00",
   "repo": "fenner/icmp-node-id",
   "labels": [
     {
@@ -49,6 +49,31 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOLJPxrM6C75aM",
+      "title": "Investigate ICMP node information",
+      "url": "https://github.com/fenner/icmp-node-id/issues/1",
+      "state": "OPEN",
+      "author": "fenner",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "At IETF119 Bob Hinden suggested looking at ICMP node id for inspiration.",
+      "createdAt": "2024-03-20T06:15:57Z",
+      "updatedAt": "2024-03-20T06:39:52Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "fenner",
+          "authorAssociation": "OWNER",
+          "body": "https://datatracker.ietf.org/doc/html/rfc4620",
+          "createdAt": "2024-03-20T06:39:50Z",
+          "updatedAt": "2024-03-20T06:39:50Z"
+        }
+      ]
+    }
+  ],
   "pulls": []
 }
