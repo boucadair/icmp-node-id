@@ -4,11 +4,11 @@
 
 Internet Area Working Group                                    B. Fenner
 Internet-Draft                                           Arista Networks
-Intended status: Standards Track                         2 February 2024
-Expires: 5 August 2024
+Intended status: Standards Track                           21 March 2024
+Expires: 22 September 2024
 
 
-                Extending ICMP for System Identification
+                 Extending ICMP for Node Identification
             draft-fenner-intarea-extended-icmp-hostid-latest
 
 Abstract
@@ -21,7 +21,7 @@ Abstract
    e.g., a traceroute.
 
    This document introduces a similar ICMP extension for Node
-   identification.  It allows providing a unique IP address or a textual
+   Identification.  It allows providing a unique IP address or a textual
    name for the node, in the case where each node may not have a unique
    IP address (e.g., the IPv6 nexthop deployment case described in
    draft-chroboczek-intarea-v4-via-v6).
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 August 2024.
+   This Internet-Draft will expire on 22 September 2024.
 
 Copyright Notice
 
@@ -81,9 +81,13 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Node Identification Object
      3.1.  C-Type Meaning in a Node Identification Object
+     3.2.  Node IP Address Sub-Object
+     3.3.  Node Name Sub-Object
    4.  Security Considerations
    5.  IANA Considerations
-   6.  Normative References
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -129,25 +133,52 @@ Table of Contents
    the node and when local policy or security considerations do not
    supersede this requirement.
 
+   Similarly to the Interface Identification Object defined in
+   [RFC5837], there are two different pieces of information that can
+   appear in a Node Information Object.
+
+   1.  An IP Address Sub-Object MAY be included, containing an address
+       of sufficient scope to identify the node within the domain.  The
+       IP Address Sub-Object is defined in Section 3.2 of this memo.
+
+   2.  A Node Name Sub-Object MAY be included, as specified in
+       Section 3.3, containing up to 63 octets of the yang sys:hostname
+       or another appropriate name uniquely identifying the node.
+
 3.1.  C-Type Meaning in a Node Identification Object
 
-   C-Type values in a Node Identification Object include:
+   The C-Type contains a bitmask describing what information is included
+   in this Node Identification Object.
 
-   *  1: Identifies Node by Name
+   Bit     0       1       2       3       4       5       6       7
+       +-------+-------+-------+-------+-------+-------+-------+-------+
+       |               Reserved                | IPAddr|  name | Rsvd2 |
+       +-------+-------+-------+-------+-------+-------+-------+-------+
 
-   If the Node Identification Object identifies the node by name, the
-   Object Payload contains the configured node name.  It is presumed
-   that the operator configures a unique node name for each system that
-   is identified in this manner.  If the Object Payload would not
-   otherwise terminate on a 32-bit boundary, it MUST be padded with
-   ASCII NULL characters.
+            Figure 1: C-Type for the Node Identification Object
 
-   *  2: Identifies Node by Address
+   The following are bit-field definitions for C-Type:
+
+   Reserved (bits 0-4): These bits are reserved for future use and MUST
+   be set to 0 on transmit and ignored on receipt.
+
+   IP Addr (bit 5) : When set, an IP Address Sub-Object is present.
+   When clear, an IP Address Sub-Object is not present.  The IP Address
+   Sub-Object is described in Section 3.2 of this memo.
+
+   Node Name (bit 6): When set, an Node Name Sub-Object is included.
+   When clear, it is not included.  The Name Sub-Object is described in
+   Section 3.3 of this memo.
+
+   Rsvd2 (bit 7): This bit is reserved for future use and MUST be set to
+   0 on transmit and ignored on receipt.
+
+3.2.  Node IP Address Sub-Object
 
    If the Node Identification Object identifies the node by address, the
    Object Payload contains an address sufficient to identify the node
    within the appropriate scope - global or as otherwise configured - as
-   depicted in Figure 1.
+   depicted in Figure 2.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -156,7 +187,7 @@ Table of Contents
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                           Address...
 
-          Figure 1: Node Identification Object - C-Type 2 Payload
+          Figure 2: Node Identification Object - C-Type 2 Payload
 
    Payload fields are defined as follows:
 
@@ -173,6 +204,37 @@ Table of Contents
    *  Address: This variable-length field represents an address of
       appropriate scope (global, if none other defined) that can be used
       to identify the node.
+
+3.3.  Node Name Sub-Object
+
+   {nodeFig} depicts the Node Name Sub-Object:
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Length    |                  Node Name...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+         Figure 3: Node Identification Object Node Name Sub-Object
+
+   The Node Name Sub-Object MUST have a length that is a multiple of 4
+   octets and MUST NOT exceed 64 octets.
+
+   The Length field represents the length of the Node Name Sub- Object,
+   including the length and the interface name in octets.  The maximum
+   valid length is 64 octets.  The length is constrained to ensure there
+   is space for the start of the original packet and additional
+   information.
+
+   The second field contains the human-readable node name.  The node
+   name SHOULD be the sys:hostname [RFC7317], if less than 64 octets, or
+   the first 63 octets of the sys:hostname, if the sys:hostname is
+   longer.  The node name MAY be some other human-meaningful name of the
+   interface.  The node name MUST be padded with ASCII NUL characters if
+   the object would not otherwise terminate on a 4-octet boundary.
+
+   The interface name MUST be represented in the UTF-8 charset [RFC3629]
+   using the Default Language [RFC2277].
 
 4.  Security Considerations
 
@@ -199,14 +261,9 @@ Table of Contents
    Class referred to as TBD above.  But for now this document is just
    for discussion.
 
-6.  Normative References
+6.  References
 
-   [I-D.chroboczek-intarea-v4-via-v6]
-              Chroboczek, J., Kumari, W. A., and T. Høiland-Jørgensen,
-              "IPv4 routes with an IPv6 next hop", Work in Progress,
-              Internet-Draft, draft-chroboczek-intarea-v4-via-v6-00, 21
-              January 2024, <https://datatracker.ietf.org/doc/html/
-              draft-chroboczek-intarea-v4-via-v6-00>.
+6.1.  Normative References
 
    [IANA.address-family-numbers]
               IANA, "Address Family Numbers",
@@ -216,6 +273,14 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC2277]  Alvestrand, H., "IETF Policy on Character Sets and
+              Languages", BCP 18, RFC 2277, DOI 10.17487/RFC2277,
+              January 1998, <https://www.rfc-editor.org/rfc/rfc2277>.
+
+   [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <https://www.rfc-editor.org/rfc/rfc3629>.
 
    [RFC4884]  Bonica, R., Gan, D., Tappan, D., and C. Pignataro,
               "Extended ICMP to Support Multi-Part Messages", RFC 4884,
@@ -227,9 +292,22 @@ Table of Contents
               Next-Hop Identification", RFC 5837, DOI 10.17487/RFC5837,
               April 2010, <https://www.rfc-editor.org/rfc/rfc5837>.
 
+   [RFC7317]  Bierman, A. and M. Bjorklund, "A YANG Data Model for
+              System Management", RFC 7317, DOI 10.17487/RFC7317, August
+              2014, <https://www.rfc-editor.org/rfc/rfc7317>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+6.2.  Informative References
+
+   [I-D.chroboczek-intarea-v4-via-v6]
+              Chroboczek, J., Kumari, W. A., and T. Høiland-Jørgensen,
+              "IPv4 routes with an IPv6 next hop", Work in Progress,
+              Internet-Draft, draft-chroboczek-intarea-v4-via-v6-00, 21
+              January 2024, <https://datatracker.ietf.org/doc/html/
+              draft-chroboczek-intarea-v4-via-v6-00>.
 
 Acknowledgments
 

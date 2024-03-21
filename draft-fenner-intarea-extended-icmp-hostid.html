@@ -4,32 +4,32 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Extending ICMP for System Identification</title>
+<title>Extending ICMP for Node Identification</title>
 <meta content="Bill Fenner" name="author">
 <meta content="
        RFC5837 describes a mechanism for Extending ICMP for Interface and Next-Hop Identification,
 which allows providing additional information in an ICMP error that helps identify
 interfaces participating in the path.  This is especially useful in environments
 where each interface may not have a unique IP address to respond to, e.g., a traceroute. 
-       This document introduces a similar ICMP extension for Node identification.
+       This document introduces a similar ICMP extension for Node Identification.
 It allows providing a unique IP address or a textual name for the node, in
 the case where each node may not have a unique IP address (e.g., the
 IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6). 
     " name="description">
-<meta content="xml2rfc 3.19.1" name="generator">
+<meta content="xml2rfc 3.20.1" name="generator">
 <meta content="ICMP" name="keyword">
 <meta content="IPv6 nexthops" name="keyword">
-<meta content="Host identification" name="keyword">
+<meta content="Node identification" name="keyword">
 <meta content="draft-fenner-intarea-extended-icmp-hostid-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.1
-    Python 3.11.6
+  xml2rfc 3.20.1
+    Python 3.11.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.1.0
+    platformdirs 4.2.0
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1033,12 +1033,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">ICMP System ID</td>
-<td class="right">February 2024</td>
+<td class="center">ICMP Node ID</td>
+<td class="right">March 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fenner</td>
-<td class="center">Expires 5 August 2024</td>
+<td class="center">Expires 22 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-fenner-intarea-extended-icmp-hostid-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-02" class="published">2 February 2024</time>
+<time datetime="2024-03-21" class="published">21 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-05">5 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-22">22 September 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1066,14 +1066,14 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">Extending ICMP for System Identification</h1>
+<h1 id="title">Extending ICMP for Node Identification</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">RFC5837 describes a mechanism for Extending ICMP for Interface and Next-Hop Identification,
 which allows providing additional information in an ICMP error that helps identify
 interfaces participating in the path.  This is especially useful in environments
 where each interface may not have a unique IP address to respond to, e.g., a traceroute.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This document introduces a similar ICMP extension for Node identification.
+<p id="section-abstract-2">This document introduces a similar ICMP extension for Node Identification.
 It allows providing a unique IP address or a textual name for the node, in
 the case where each node may not have a unique IP address (e.g., the
 IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
@@ -1113,7 +1113,7 @@ IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1154,6 +1154,12 @@ IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-c-type-meaning-in-a-node-id" class="internal xref">C-Type Meaning in a Node Identification Object</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-node-ip-address-sub-object" class="internal xref">Node IP Address Sub-Object</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-node-name-sub-object" class="internal xref">Node Name Sub-Object</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
@@ -1163,7 +1169,15 @@ IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
@@ -1231,36 +1245,67 @@ those listed above.<a href="#section-3-3" class="pilcrow">¶</a></p>
 listed messages and <span class="bcp14">SHOULD</span> be appended whenever required to identify
 the node and when local policy or security
 considerations do not supersede this requirement.<a href="#section-3-4" class="pilcrow">¶</a></p>
+<p id="section-3-5">Similarly to the Interface Identification Object defined in <span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span>,
+there are two different pieces of information that can appear in a
+Node Information Object.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3-6">
+<li id="section-3-6.1">
+          <p id="section-3-6.1.1">An IP Address Sub-Object <span class="bcp14">MAY</span> be included, containing an address
+of sufficient scope to identify the node within the domain.
+The IP Address Sub-Object is defined in <a href="#IPAddr" class="auto internal xref">Section 3.2</a> of this memo.<a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-3-6.2">
+          <p id="section-3-6.2.1">A Node Name Sub-Object <span class="bcp14">MAY</span> be included, as specified in <a href="#Name" class="auto internal xref">Section 3.3</a>,
+containing up to 63 octets of the yang sys:hostname or another
+appropriate name uniquely identifying the node.<a href="#section-3-6.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ol>
 <div id="c-type-meaning-in-a-node-identification-object">
 <section id="section-3.1">
         <h3 id="name-c-type-meaning-in-a-node-id">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-c-type-meaning-in-a-node-id" class="section-name selfRef">C-Type Meaning in a Node Identification Object</a>
         </h3>
-<p id="section-3.1-1">C-Type values in a Node Identification Object include:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1-2.1">
-            <p id="section-3.1-2.1.1">1: Identifies Node by Name<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-3.1-3">If the Node Identification Object identifies the node
-by name, the Object Payload contains the configured node name.
-It is presumed that the operator configures a unique node name
-for each system that is identified in this manner.
-If the Object Payload would not otherwise
-terminate on a 32-bit boundary, it <span class="bcp14">MUST</span> be padded with ASCII NULL
-characters.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1-4.1">
-            <p id="section-3.1-4.1.1">2: Identifies Node by Address<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-3.1-5">If the Node Identification Object identifies the node by
+<p id="section-3.1-1">The C-Type contains a bitmask describing what information is included
+in this Node Identification Object.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span id="name-c-type-for-the-node-identif"></span><div id="ctypeFig">
+<figure id="figure-1">
+          <div class="alignLeft art-text artwork" id="section-3.1-2.1">
+<pre>
+Bit     0       1       2       3       4       5       6       7
+    +-------+-------+-------+-------+-------+-------+-------+-------+
+    |               Reserved                | IPAddr|  name | Rsvd2 |
+    +-------+-------+-------+-------+-------+-------+-------+-------+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-c-type-for-the-node-identif" class="selfRef">C-Type for the Node Identification Object</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-3">The following are bit-field definitions for C-Type:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">Reserved (bits 0-4): These bits are reserved for future use
+and <span class="bcp14">MUST</span> be set to 0 on transmit and ignored on receipt.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">IP Addr (bit 5) : When set, an IP Address Sub-Object is present.
+When clear, an IP Address Sub-Object is not present.  The IP Address
+Sub-Object is described in <a href="#IPAddr" class="auto internal xref">Section 3.2</a> of this memo.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Node Name (bit 6): When set, an Node Name Sub-Object is
+included.  When clear, it is not included.  The Name Sub-Object is
+described in <a href="#Name" class="auto internal xref">Section 3.3</a> of this memo.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-7">Rsvd2 (bit 7): This bit is reserved for future use
+and <span class="bcp14">MUST</span> be set to 0 on transmit and ignored on receipt.<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="IPAddr">
+<section id="section-3.2">
+        <h3 id="name-node-ip-address-sub-object">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-node-ip-address-sub-object" class="section-name selfRef">Node IP Address Sub-Object</a>
+        </h3>
+<p id="section-3.2-1">If the Node Identification Object identifies the node by
 address, the Object Payload contains an address sufficient
 to identify the node within the appropriate scope - global
-or as otherwise configured - as depicted in <a href="#addrFig" class="auto internal xref">Figure 1</a>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+or as otherwise configured - as depicted in <a href="#addrFig" class="auto internal xref">Figure 2</a>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <span id="name-node-identification-object-"></span><div id="addrFig">
-<figure id="figure-1">
-          <div class="alignLeft art-text artwork" id="section-3.1-6.1">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-3.2-2.1">
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1270,30 +1315,68 @@ or as otherwise configured - as depicted in <a href="#addrFig" class="auto inter
 |                           Address...
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-node-identification-object-" class="selfRef">Node Identification Object - C-Type 2 Payload</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-7">Payload fields are defined as follows:<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">Payload fields are defined as follows:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.1-8.1">
-            <p id="section-3.1-8.1.1">Address Family Identifier (AFI): This 16-bit field identifies
+<li class="normal" id="section-3.2-4.1">
+            <p id="section-3.2-4.1.1">Address Family Identifier (AFI): This 16-bit field identifies
 the type of address represented by the Address field.
 Values for this field represent a subset of values
 found in the IANA registry of Address Family Numbers (available
 from  <span>[<a href="#IANA.address-family-numbers" class="cite xref">IANA.address-family-numbers</a>]</span>).  Valid values are 1 (representing a
-32-bit IPv4 address) and 2 (representing a 128-bit IPv6 address).<a href="#section-3.1-8.1.1" class="pilcrow">¶</a></p>
+32-bit IPv4 address) and 2 (representing a 128-bit IPv6 address).<a href="#section-3.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-8.2">
-            <p id="section-3.1-8.2.1">Reserved: This field <span class="bcp14">MUST</span> be set to 0 and ignored upon
-receipt.<a href="#section-3.1-8.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.2-4.2">
+            <p id="section-3.2-4.2.1">Reserved: This field <span class="bcp14">MUST</span> be set to 0 and ignored upon
+receipt.<a href="#section-3.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.1-8.3">
-            <p id="section-3.1-8.3.1">Address: This variable-length field represents an address
+          <li class="normal" id="section-3.2-4.3">
+            <p id="section-3.2-4.3.1">Address: This variable-length field represents an address
 of appropriate scope (global, if none other defined) that
-can be used to identify the node.<a href="#section-3.1-8.3.1" class="pilcrow">¶</a></p>
+can be used to identify the node.<a href="#section-3.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+</section>
+</div>
+<div id="Name">
+<section id="section-3.3">
+        <h3 id="name-node-name-sub-object">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-node-name-sub-object" class="section-name selfRef">Node Name Sub-Object</a>
+        </h3>
+<p id="section-3.3-1">{nodeFig} depicts the Node Name Sub-Object:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<span id="name-node-identification-object-n"></span><div id="nodeFix">
+<figure id="figure-3">
+          <div class="alignLeft art-text artwork" id="section-3.3-2.1">
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     Length    |                  Node Name...
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-node-identification-object-n" class="selfRef">Node Identification Object Node Name Sub-Object</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.3-3">The Node Name Sub-Object <span class="bcp14">MUST</span> have a length that is a multiple
+of 4 octets and <span class="bcp14">MUST NOT</span> exceed 64 octets.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.3-4">The Length field represents the length of the Node Name Sub-
+Object, including the length and the interface name in octets.  The
+maximum valid length is 64 octets.  The length is constrained to
+ensure there is space for the start of the original packet and
+additional information.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.3-5">The second field contains the human-readable node name.  The node
+name <span class="bcp14">SHOULD</span> be the sys:hostname <span>[<a href="#RFC7317" class="cite xref">RFC7317</a>]</span>, if less than 64 octets,
+or the first 63 octets of the sys:hostname, if the sys:hostname is
+longer.  The node name <span class="bcp14">MAY</span> be some other human-meaningful name of
+the interface.  The node name <span class="bcp14">MUST</span> be padded with ASCII NUL characters
+if the object would not otherwise terminate on a 4-octet boundary.<a href="#section-3.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.3-6">The interface name <span class="bcp14">MUST</span> be represented in the UTF-8 charset <span>[<a href="#RFC3629" class="cite xref">RFC3629</a>]</span>
+using the Default Language <span>[<a href="#RFC2277" class="cite xref">RFC2277</a>]</span>.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1329,39 +1412,65 @@ Object Class referred to as TBD above.  But for now this
 document is just for discussion.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
 <section id="section-6">
-      <h2 id="name-normative-references">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
-<dt id="I-D.chroboczek-intarea-v4-via-v6">[I-D.chroboczek-intarea-v4-via-v6]</dt>
-      <dd>
-<span class="refAuthor">Chroboczek, J.</span>, <span class="refAuthor">Kumari, W. A.</span>, and <span class="refAuthor">T. Høiland-Jørgensen</span>, <span class="refTitle">"IPv4 routes with an IPv6 next hop"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-chroboczek-intarea-v4-via-v6-00</span>, <time datetime="2024-01-21" class="refDate">21 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-chroboczek-intarea-v4-via-v6-00">https://datatracker.ietf.org/doc/html/draft-chroboczek-intarea-v4-via-v6-00</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="IANA.address-family-numbers">[IANA.address-family-numbers]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Address Family Numbers"</span>, <span>&lt;<a href="http://www.iana.org/assignments/address-family-numbers">http://www.iana.org/assignments/address-family-numbers</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC2277">[RFC2277]</dt>
+        <dd>
+<span class="refAuthor">Alvestrand, H.</span>, <span class="refTitle">"IETF Policy on Character Sets and Languages"</span>, <span class="seriesInfo">BCP 18</span>, <span class="seriesInfo">RFC 2277</span>, <span class="seriesInfo">DOI 10.17487/RFC2277</span>, <time datetime="1998-01" class="refDate">January 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2277">https://www.rfc-editor.org/rfc/rfc2277</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3629">[RFC3629]</dt>
+        <dd>
+<span class="refAuthor">Yergeau, F.</span>, <span class="refTitle">"UTF-8, a transformation format of ISO 10646"</span>, <span class="seriesInfo">STD 63</span>, <span class="seriesInfo">RFC 3629</span>, <span class="seriesInfo">DOI 10.17487/RFC3629</span>, <time datetime="2003-11" class="refDate">November 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3629">https://www.rfc-editor.org/rfc/rfc3629</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC4884">[RFC4884]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bonica, R.</span>, <span class="refAuthor">Gan, D.</span>, <span class="refAuthor">Tappan, D.</span>, and <span class="refAuthor">C. Pignataro</span>, <span class="refTitle">"Extended ICMP to Support Multi-Part Messages"</span>, <span class="seriesInfo">RFC 4884</span>, <span class="seriesInfo">DOI 10.17487/RFC4884</span>, <time datetime="2007-04" class="refDate">April 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4884">https://www.rfc-editor.org/rfc/rfc4884</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5837">[RFC5837]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Atlas, A., Ed.</span>, <span class="refAuthor">Bonica, R., Ed.</span>, <span class="refAuthor">Pignataro, C., Ed.</span>, <span class="refAuthor">Shen, N.</span>, and <span class="refAuthor">JR. Rivers</span>, <span class="refTitle">"Extending ICMP for Interface and Next-Hop Identification"</span>, <span class="seriesInfo">RFC 5837</span>, <span class="seriesInfo">DOI 10.17487/RFC5837</span>, <time datetime="2010-04" class="refDate">April 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5837">https://www.rfc-editor.org/rfc/rfc5837</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7317">[RFC7317]</dt>
+        <dd>
+<span class="refAuthor">Bierman, A.</span> and <span class="refAuthor">M. Bjorklund</span>, <span class="refTitle">"A YANG Data Model for System Management"</span>, <span class="seriesInfo">RFC 7317</span>, <span class="seriesInfo">DOI 10.17487/RFC7317</span>, <time datetime="2014-08" class="refDate">August 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7317">https://www.rfc-editor.org/rfc/rfc7317</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
+<div id="sec-informative-references">
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.chroboczek-intarea-v4-via-v6">[I-D.chroboczek-intarea-v4-via-v6]</dt>
+      <dd>
+<span class="refAuthor">Chroboczek, J.</span>, <span class="refAuthor">Kumari, W. A.</span>, and <span class="refAuthor">T. Høiland-Jørgensen</span>, <span class="refTitle">"IPv4 routes with an IPv6 next hop"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-chroboczek-intarea-v4-via-v6-00</span>, <time datetime="2024-01-21" class="refDate">21 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-chroboczek-intarea-v4-via-v6-00">https://datatracker.ietf.org/doc/html/draft-chroboczek-intarea-v4-via-v6-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
 <div id="acknowledgments">
 <section id="appendix-A">
       <h2 id="name-acknowledgments">
