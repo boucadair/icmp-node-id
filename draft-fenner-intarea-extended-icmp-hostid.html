@@ -12,18 +12,18 @@ which allows providing additional information in an ICMP error that helps identi
 interfaces participating in the path.  This is especially useful in environments
 where each interface may not have a unique IP address to respond to, e.g., a traceroute. 
        This document introduces a similar ICMP extension for Node Identification.
-It allows providing a unique IP address or a textual name for the node, in
+It allows providing a unique IP address and/or a textual name for the node, in
 the case where each node may not have a unique IP address (e.g., the
 IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6). 
     " name="description">
-<meta content="xml2rfc 3.20.1" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="ICMP" name="keyword">
 <meta content="IPv6 nexthops" name="keyword">
 <meta content="Node identification" name="keyword">
 <meta content="draft-fenner-intarea-extended-icmp-hostid-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.20.1
-    Python 3.11.8
+  xml2rfc 3.21.0
+    Python 3.11.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
@@ -1034,11 +1034,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">ICMP Node ID</td>
-<td class="right">March 2024</td>
+<td class="right">April 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Fenner</td>
-<td class="center">Expires 22 September 2024</td>
+<td class="center">Expires 25 October 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-fenner-intarea-extended-icmp-hostid-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-21" class="published">21 March 2024</time>
+<time datetime="2024-04-23" class="published">23 April 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-22">22 September 2024</time></dd>
+<dd class="expires"><time datetime="2024-10-25">25 October 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1074,7 +1074,7 @@ which allows providing additional information in an ICMP error that helps identi
 interfaces participating in the path.  This is especially useful in environments
 where each interface may not have a unique IP address to respond to, e.g., a traceroute.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This document introduces a similar ICMP extension for Node Identification.
-It allows providing a unique IP address or a textual name for the node, in
+It allows providing a unique IP address and/or a textual name for the node, in
 the case where each node may not have a unique IP address (e.g., the
 IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
@@ -1113,7 +1113,7 @@ IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1180,10 +1180,18 @@ IPv6 nexthop deployment case described in draft-chroboczek-intarea-v4-via-v6).<a
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-change-history" class="internal xref">Change history</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-changes-since-draft-fenner-" class="internal xref">Changes since draft-fenner-intarea-extended-icmp-hostid-00</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1407,9 +1415,41 @@ that ICMP messages and their contents are easily spoofed.<a href="#section-4-3" 
       <h2 id="name-iana-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">This document will ask IANA to allocate an ICMP Extension
-Object Class referred to as TBD above.  But for now this
-document is just for discussion.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This document requests IANA to allocate an ICMP Extension
+Object Class referred to as TBD above.  The corresponding
+Class Sub-types Registry is as follows:<a href="#section-5-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-1">
+        <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">C-Type (Value)</th>
+            <th class="text-left" rowspan="1" colspan="1">Description</th>
+            <th class="text-left" rowspan="1" colspan="1">Reference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">0-4</td>
+            <td class="text-left" rowspan="1" colspan="1">Unallocated - allocatable with Standards Action</td>
+            <td class="text-left" rowspan="1" colspan="1">[This document]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">5</td>
+            <td class="text-left" rowspan="1" colspan="1">IP Address Sub-object included</td>
+            <td class="text-left" rowspan="1" colspan="1">[This document]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">6</td>
+            <td class="text-left" rowspan="1" colspan="1">Name Sub-object included</td>
+            <td class="text-left" rowspan="1" colspan="1">[This document]</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">7</td>
+            <td class="text-left" rowspan="1" colspan="1">Unallocated - allocatable with Standards Action</td>
+            <td class="text-left" rowspan="1" colspan="1">[This document]</td>
+          </tr>
+        </tbody>
+      </table>
 </section>
 </div>
 <section id="section-6">
@@ -1471,18 +1511,42 @@ document is just for discussion.<a href="#section-5-1" class="pilcrow">¶</a></p
 </section>
 </div>
 </section>
-<div id="acknowledgments">
+<div id="change-history">
 <section id="appendix-A">
+      <h2 id="name-change-history">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-change-history" class="section-name selfRef">Change history</a>
+      </h2>
+<p id="appendix-A-1">This section is to be removed before publishing as an RFC.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="changes-since-draft-fenner-intarea-extended-icmp-hostid-00">
+<section id="appendix-A.1">
+        <h3 id="name-changes-since-draft-fenner-">
+<a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-changes-since-draft-fenner-" class="section-name selfRef">Changes since draft-fenner-intarea-extended-icmp-hostid-00</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-A.1-1.1">
+            <p id="appendix-A.1-1.1.1">Instead of having two different messages with the same Class Value
+and different CType values, we copy the bitmap implementation
+from <span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span>.  The re-use of bit positions means that packet
+parsing and generation code can be largely reused from existing
+<span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span> code.<a href="#appendix-A.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">This document derives text heavily from <span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span>, since the
+<p id="appendix-B-1">This document derives text heavily from <span>[<a href="#RFC5837" class="cite xref">RFC5837</a>]</span>, since the
 underlying mechanism is identical, and only the content of the
-messages differ.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+messages differ.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-C">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
