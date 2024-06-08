@@ -5,7 +5,7 @@
 Internet Area Working Group                                    B. Fenner
 Internet-Draft                                                 R. Thomas
 Intended status: Standards Track                         Arista Networks
-Expires: 28 October 2024                                   26 April 2024
+Expires: 10 December 2024                                    8 June 2024
 
 
                  Extending ICMP for Node Identification
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 October 2024.
+   This Internet-Draft will expire on 10 December 2024.
 
 Copyright Notice
 
@@ -164,13 +164,13 @@ Table of Contents
    Reserved (bits 0-4): These bits are reserved for future use and MUST
    be set to 0 on transmit and ignored on receipt.
 
-   IP Addr (bit 5) : When set, an IP Address Sub-Object is present.
-   When clear, an IP Address Sub-Object is not present.  The IP Address
-   Sub-Object is described in Section 3.2 of this memo.
+   IP Addr (bit 5) : When set, a Node IP Address Sub-Object is present.
+   When clear, an IP Address Sub-Object is not present.  The Node IP
+   Address Sub-Object is described in Section 3.2 of this memo.
 
-   Node Name (bit 6): When set, an Node Name Sub-Object is included.
-   When clear, it is not included.  The Name Sub-Object is described in
-   Section 3.3 of this memo.
+   Node Name (bit 6): When set, a Node Name Sub-Object is included.
+   When clear, it is not included.  The Node Name Sub-Object is
+   described in Section 3.3 of this memo.
 
    Rsvd2 (bit 7): This bit is reserved for future use and MUST be set to
    0 on transmit and ignored on receipt.
